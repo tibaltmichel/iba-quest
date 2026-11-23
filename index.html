@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#171813">
+<title>The IBA Quest — 101 cocktails</title>
+<style>
+:root{--bg:#f3f0e8;--paper:#fffdf7;--ink:#20221c;--muted:#77786d;--line:#dedacd;--accent:#d9ff62;--dark:#171813;--red:#b84f38}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:var(--dark);color:#f7f4e9;padding:28px max(20px,calc((100vw - 1120px)/2)) 30px}
+.topline{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#c7c8bb}
+.logo{display:flex;gap:9px;align-items:center}.dot{width:10px;height:10px;border-radius:50%;background:var(--accent)}
+h1{font-size:clamp(36px,7vw,72px);line-height:.96;letter-spacing:-.065em;margin:38px 0 16px;font-weight:850;max-width:780px}
+h1 em{font-style:normal;color:var(--accent)}.intro{color:#c9cabe;max-width:560px;line-height:1.55;font-size:15px}
+.wrap{max-width:1120px;margin:auto;padding:24px 20px 60px}
+.stats{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px;margin-top:-1px}
+.stat{background:var(--paper);border:1px solid var(--line);padding:17px 19px;border-radius:14px}.stat:first-child{background:var(--accent);border-color:var(--accent)}
+.stat small{display:block;text-transform:uppercase;letter-spacing:.1em;font-size:10px;font-weight:750;color:#55564c}.stat strong{display:block;font-size:30px;letter-spacing:-.05em;margin-top:5px}.progress{height:5px;background:#d7d6c9;border-radius:9px;margin-top:12px;overflow:hidden}.progress span{display:block;height:100%;width:0;background:var(--dark);transition:width .25s}
+.toolbar{display:flex;gap:10px;margin:25px 0 16px;flex-wrap:wrap}.search{flex:1;min-width:200px;position:relative}.search input{width:100%;height:44px;border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:0 14px;font:inherit;outline:none}.search input:focus{border-color:#777}
+select,.btn{height:44px;border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:0 13px;font:inherit;color:var(--ink)}.btn{cursor:pointer;font-weight:700}.btn:hover{transform:translateY(-1px)}.btn.dark{background:var(--dark);color:white;border-color:var(--dark)}.btn.lime{background:var(--accent);border-color:var(--accent)}
+.category{margin:28px 0 12px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}.category h2{font-size:20px;letter-spacing:-.04em;margin:0}.category span{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.drink{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:14px;min-height:112px;display:flex;flex-direction:column;justify-content:space-between;gap:16px;cursor:pointer;transition:border-color .15s,transform .15s}
+.drink:hover{border-color:#999989;transform:translateY(-2px)}.drink.done{background:#e7ebd9;border-color:#d0d9b9}.drink-top{display:flex;align-items:flex-start;gap:10px}.check{width:20px;height:20px;flex:none;border:1.5px solid #b8b8a9;border-radius:6px;display:grid;place-items:center;font-size:13px;font-weight:900}.done .check{background:var(--dark);color:var(--accent);border-color:var(--dark)}
+.drink h3{font-size:15px;line-height:1.2;margin:2px 0 0;letter-spacing:-.025em}.drink-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px}.tag{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:750}.date{font-size:11px;color:#636658}
+.empty{padding:40px 15px;text-align:center;color:var(--muted);background:var(--paper);border:1px dashed var(--line);border-radius:12px}
+footer{margin-top:45px;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;color:var(--muted);font-size:12px;line-height:1.5}footer a{color:var(--ink)}
+dialog{width:min(520px,calc(100% - 28px));border:1px solid var(--line);border-radius:18px;padding:0;background:var(--paper);color:var(--ink);box-shadow:0 25px 100px #0003}dialog::backdrop{background:#1119;backdrop-filter:blur(3px)}.modal{padding:24px}.modal-head{display:flex;justify-content:space-between;gap:12px}.modal h2{font-size:30px;letter-spacing:-.05em;line-height:1.05;margin:8px 0}.x{border:0;background:#eeece3;border-radius:50%;width:34px;height:34px;font-size:20px;cursor:pointer;flex:none}.modal p{color:var(--muted);font-size:13px;margin:0 0 18px}.field{display:block;margin:14px 0}.field label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:750;color:var(--muted);margin-bottom:6px}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:9px;background:white;padding:11px;font:inherit}.field textarea{min-height:74px;resize:vertical}.stars{display:flex;gap:7px}.star{border:1px solid var(--line);background:white;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:16px}.star.active{background:var(--accent);border-color:var(--accent)}.modal-actions{display:flex;gap:8px;margin-top:20px}.modal-actions button{flex:1}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:1fr 1fr}.stat:first-child{grid-column:1/-1}.stat strong{font-size:26px}}
+@media(max-width:420px){.grid{grid-template-columns:1fr 1fr;gap:7px}.drink{padding:11px;min-height:106px}.drink h3{font-size:13px}.tag{font-size:8px}.date{font-size:10px}.toolbar select{flex:1}.topline{font-size:9px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="topline"><div class="logo"><span class="dot"></span> A personal tasting project</div><div>IBA · 2024/25 list</div></div>
+  <h1>THE IBA<br><em>QUEST.</em></h1>
+  <div class="intro">101 official cocktails. One very long bucket list. Track every drink you try, remember where you had it, and see how close you are to completing the collection.</div>
+</header>
+<main class="wrap">
+  <section class="stats">
+    <div class="stat"><small>Quest progress</small><strong><span id="count">0</span> <span style="font-size:16px;font-weight:650;letter-spacing:0">/ 101 tasted</span></strong><div class="progress"><span id="bar"></span></div></div>
+    <div class="stat"><small>Completion</small><strong id="percent">0%</strong></div>
+    <div class="stat"><small>Still to try</small><strong id="remaining">101</strong></div>
+  </section>
+  <section id="cloudBox" style="background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:14px">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+      <div><strong id="cloudTitle">☁ Cloud save setup</strong><div id="cloudMsg" style="color:var(--muted);font-size:13px;margin-top:4px">Add your Supabase project credentials below, then create an account to sync your quest across devices.</div></div>
+      <div id="accountControls" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <input id="email" type="email" placeholder="Email address" style="height:40px;border:1px solid var(--line);border-radius:9px;padding:0 10px;background:white">
+        <input id="password" type="password" placeholder="Password (6+ characters)" style="height:40px;border:1px solid var(--line);border-radius:9px;padding:0 10px;background:white">
+        <button class="btn dark" id="authBtn">Sign in</button><button class="btn" id="signupBtn">Create account</button>
+      </div>
+      <button class="btn" id="logoutBtn" style="display:none">Log out</button>
+    </div>
+    <details style="margin-top:12px"><summary style="font-size:12px;cursor:pointer;color:var(--muted)">Setup: connect cloud storage (one-time)</summary>
+      <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px;max-width:600px">
+        <input id="supabaseUrl" placeholder="Supabase Project URL (https://....supabase.co)" style="height:40px;border:1px solid var(--line);border-radius:9px;padding:0 10px;background:white">
+        <input id="supabaseKey" placeholder="Supabase anon / publishable key" style="height:40px;border:1px solid var(--line);border-radius:9px;padding:0 10px;background:white">
+        <button class="btn lime" id="connectBtn">Connect and save settings</button>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">These public client credentials are intended for browser use. Database access is protected by Supabase Row Level Security. Your password is handled by Supabase Auth, never stored by this site.</div>
+      </div>
+    </details>
+  </section>
+  <div class="toolbar">
+    <div class="search"><input id="search" type="search" placeholder="Search a cocktail…" autocomplete="off"></div>
+    <select id="category"><option value="all">All categories</option><option>The Unforgettables</option><option>Contemporary Classics</option><option>New Era</option></select>
+    <select id="status"><option value="all">Everything</option><option value="todo">Not tried yet</option><option value="done">Already tasted</option></select>
+    <button class="btn" id="export">Export</button>
+    <button class="btn" id="importBtn">Import</button><input type="file" id="importFile" accept="application/json" hidden>
+  </div>
+  <div id="list"></div>
+  <footer><div>Made for the long game. Your progress is saved in this browser on this device.</div><div>Official reference: <a href="https://iba-world.com/cocktails/all-cocktails/" target="_blank" rel="noopener">IBA cocktail list ↗</a><br>List reflects the 101-cocktail 2024/25 collection; the IBA may update it.</div></footer>
+</main>
+<dialog id="detail">
+ <form method="dialog" id="detailForm" class="modal">
+  <div class="modal-head"><div><div class="tag" id="modalCat"></div><h2 id="modalName"></h2><p>Log your tasting. No need to be a cocktail expert — just remember the experience.</p></div><button class="x" type="button" id="close" aria-label="Close">×</button></div>
+  <div class="field"><label for="date">Date tasted</label><input id="date" type="date"></div>
+  <div class="field"><label for="place">Bar / place</label><input id="place" placeholder="e.g. a bar in Tbilisi"></div>
+  <div class="field"><label>Your rating</label><div class="stars" id="stars"><button class="star" type="button" data-v="1">★</button><button class="star" type="button" data-v="2">★</button><button class="star" type="button" data-v="3">★</button><button class="star" type="button" data-v="4">★</button><button class="star" type="button" data-v="5">★</button></div></div>
+  <div class="field"><label for="notes">Notes / tasting impressions</label><textarea id="notes" placeholder="Sweet? Bitter? Would you order it again?"></textarea></div>
+  <div class="modal-actions"><button class="btn" type="button" id="undo">Mark not tried</button><button class="btn dark" type="button" id="save">Save tasting ✓</button></div>
+ </form>
+</dialog>
+<script>
+const cocktails = [{"name": "Alexander", "category": "The Unforgettables"}, {"name": "Americano", "category": "The Unforgettables"}, {"name": "Angel Face", "category": "The Unforgettables"}, {"name": "Aviation", "category": "The Unforgettables"}, {"name": "Between the Sheets", "category": "The Unforgettables"}, {"name": "Boulevardier", "category": "The Unforgettables"}, {"name": "Brandy Crusta", "category": "The Unforgettables"}, {"name": "Casino", "category": "The Unforgettables"}, {"name": "Clover Club", "category": "The Unforgettables"}, {"name": "Daiquiri", "category": "The Unforgettables"}, {"name": "Derby", "category": "The Unforgettables"}, {"name": "Dry Martini", "category": "The Unforgettables"}, {"name": "Gin Fizz", "category": "The Unforgettables"}, {"name": "Hanky Panky", "category": "The Unforgettables"}, {"name": "John Collins", "category": "The Unforgettables"}, {"name": "Last Word", "category": "The Unforgettables"}, {"name": "Manhattan", "category": "The Unforgettables"}, {"name": "Martinez", "category": "The Unforgettables"}, {"name": "Mary Pickford", "category": "The Unforgettables"}, {"name": "Monkey Gland", "category": "The Unforgettables"}, {"name": "Negroni", "category": "The Unforgettables"}, {"name": "Old Fashioned", "category": "The Unforgettables"}, {"name": "Paradise", "category": "The Unforgettables"}, {"name": "Planter’s Punch", "category": "The Unforgettables"}, {"name": "Porto Flip", "category": "The Unforgettables"}, {"name": "Ramos Fizz", "category": "The Unforgettables"}, {"name": "Remember the Maine", "category": "The Unforgettables"}, {"name": "Rusty Nail", "category": "The Unforgettables"}, {"name": "Sazerac", "category": "The Unforgettables"}, {"name": "Sidecar", "category": "The Unforgettables"}, {"name": "Stinger", "category": "The Unforgettables"}, {"name": "Tuxedo", "category": "The Unforgettables"}, {"name": "Whiskey Sour", "category": "The Unforgettables"}, {"name": "White Lady", "category": "The Unforgettables"}, {"name": "Bellini", "category": "Contemporary Classics"}, {"name": "Black Russian", "category": "Contemporary Classics"}, {"name": "Bloody Mary", "category": "Contemporary Classics"}, {"name": "Caipirinha", "category": "Contemporary Classics"}, {"name": "Cardinale", "category": "Contemporary Classics"}, {"name": "Champagne Cocktail", "category": "Contemporary Classics"}, {"name": "Corpse Reviver #2", "category": "Contemporary Classics"}, {"name": "Cosmopolitan", "category": "Contemporary Classics"}, {"name": "Cuba Libre", "category": "Contemporary Classics"}, {"name": "French 75", "category": "Contemporary Classics"}, {"name": "French Connection", "category": "Contemporary Classics"}, {"name": "Garibaldi", "category": "Contemporary Classics"}, {"name": "Grasshopper", "category": "Contemporary Classics"}, {"name": "Hemingway Special", "category": "Contemporary Classics"}, {"name": "Horse’s Neck", "category": "Contemporary Classics"}, {"name": "Irish Coffee", "category": "Contemporary Classics"}, {"name": "Kir", "category": "Contemporary Classics"}, {"name": "Lemon Drop Martini", "category": "Contemporary Classics"}, {"name": "Long Island Iced Tea", "category": "Contemporary Classics"}, {"name": "Mai-Tai", "category": "Contemporary Classics"}, {"name": "Margarita", "category": "Contemporary Classics"}, {"name": "Mimosa", "category": "Contemporary Classics"}, {"name": "Mint Julep", "category": "Contemporary Classics"}, {"name": "Mojito", "category": "Contemporary Classics"}, {"name": "Moscow Mule", "category": "Contemporary Classics"}, {"name": "Piña Colada", "category": "Contemporary Classics"}, {"name": "Pisco Sour", "category": "Contemporary Classics"}, {"name": "Sea Breeze", "category": "Contemporary Classics"}, {"name": "Sex on the Beach", "category": "Contemporary Classics"}, {"name": "Singapore Sling", "category": "Contemporary Classics"}, {"name": "Tequila Sunrise", "category": "Contemporary Classics"}, {"name": "Vesper", "category": "Contemporary Classics"}, {"name": "Zombie", "category": "Contemporary Classics"}, {"name": "Bee’s Knees", "category": "New Era"}, {"name": "Bramble", "category": "New Era"}, {"name": "Canchanchara", "category": "New Era"}, {"name": "Chartreuse Swizzle", "category": "New Era"}, {"name": "Dark ’N’ Stormy", "category": "New Era"}, {"name": "Don’s Special Daiquiri", "category": "New Era"}, {"name": "Espresso Martini", "category": "New Era"}, {"name": "Fernandito", "category": "New Era"}, {"name": "French Martini", "category": "New Era"}, {"name": "Gin Basil Smash", "category": "New Era"}, {"name": "Grand Margarita", "category": "New Era"}, {"name": "IBA Tiki", "category": "New Era"}, {"name": "Illegal", "category": "New Era"}, {"name": "Jungle Bird", "category": "New Era"}, {"name": "Missionary’s Downfall", "category": "New Era"}, {"name": "Naked and Famous", "category": "New Era"}, {"name": "New York Sour", "category": "New Era"}, {"name": "Old Cuban", "category": "New Era"}, {"name": "Paloma", "category": "New Era"}, {"name": "Paper Plane", "category": "New Era"}, {"name": "Penicillin", "category": "New Era"}, {"name": "Pisco Punch", "category": "New Era"}, {"name": "Porn Star Martini", "category": "New Era"}, {"name": "Rabo de Galo", "category": "New Era"}, {"name": "Russian Spring Punch", "category": "New Era"}, {"name": "Sherry Cobbler", "category": "New Era"}, {"name": "Spritz", "category": "New Era"}, {"name": "Spicy Fifty", "category": "New Era"}, {"name": "Suffering Bastard", "category": "New Era"}, {"name": "Three Dots and a Dash", "category": "New Era"}, {"name": "Tipperary", "category": "New Era"}, {"name": "Tommy’s Margarita", "category": "New Era"}, {"name": "Trinidad Sour", "category": "New Era"}, {"name": "Ve.n.to", "category": "New Era"}];
+const KEY = "iba-quest-progress-v1";
+let progress = {};
+let current = null;
+let rating = 0;
+try { progress = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e) { progress = {}; }
+const $ = id => document.getElementById(id);
+let supabase = null, user = null, saveTimer = null;
+function setCloudStatus(title,msg){ $("cloudTitle").textContent=title; $("cloudMsg").textContent=msg; }
+function saveStore(){ localStorage.setItem(KEY, JSON.stringify(progress)); if(user && supabase){ clearTimeout(saveTimer); saveTimer=setTimeout(cloudSave,350); } }
+async function cloudSave(){ if(!user||!supabase)return; try{ const {error}=await supabase.from("cocktail_progress").upsert({user_id:user.id,progress,updated_at:new Date().toISOString()},{onConflict:"user_id"}); if(error) throw error; setCloudStatus("☁ Saved to your account", "Cloud sync active for "+user.email+". Your tasting progress is backed up online."); }catch(e){setCloudStatus("⚠ Cloud save failed",e.message+" — your changes remain saved locally in this browser.");} }
+function setupSupabase(){ const u=localStorage.getItem("iba_supabase_url"), k=localStorage.getItem("iba_supabase_key"); if(!u||!k){setCloudStatus("☁ Cloud save setup","Add your Supabase project credentials below, then create an account to sync your quest across devices."); return false;} try{supabase=window.supabase.createClient(u,k); $("supabaseUrl").value=u; $("supabaseKey").value=k; setCloudStatus("☁ Connected to Supabase","Sign in or create an account to sync your tasting history."); return true;}catch(e){setCloudStatus("⚠ Setup error",e.message);return false;} }
+async function loadCloud(){if(!user||!supabase)return; setCloudStatus("☁ Loading your progress…","Fetching your saved tasting log."); try{const {data,error}=await supabase.from("cocktail_progress").select("progress").eq("user_id",user.id).maybeSingle(); if(error)throw error; if(data&&data.progress){progress=data.progress;localStorage.setItem(KEY,JSON.stringify(progress));render();setCloudStatus("☁ Synced","Your cloud progress is loaded for "+user.email+".");}else{await cloudSave();setCloudStatus("☁ Cloud save active","No existing cloud record found; your current local progress was uploaded.");}}catch(e){setCloudStatus("⚠ Could not load cloud data",e.message+" — local data is still available.");}}
+function setLoggedInUI(){const logged=!!user; $("accountControls").style.display=logged?"none":"flex";$("logoutBtn").style.display=logged?"inline-block":"none"; if(logged)setCloudStatus("☁ Signed in","Cloud sync active for "+user.email+".");}
+
+function entry(name){ return progress[name] || {}; }
+function isDone(name){ return !!entry(name).done; }
+function render(){
+ const completed = cocktails.filter(c=>isDone(c.name)).length;
+ $("count").textContent = completed; $("remaining").textContent = cocktails.length-completed;
+ $("percent").textContent = Math.round(completed/cocktails.length*100)+"%";
+ $("bar").style.width = (completed/cocktails.length*100)+"%";
+ const q=$("search").value.trim().toLowerCase(), cat=$("category").value, status=$("status").value;
+ const groups = ["The Unforgettables","Contemporary Classics","New Era"];
+ let out="", visible=0;
+ for(const group of groups){
+  const items=cocktails.filter(c=>c.category===group && (!q || c.name.toLowerCase().includes(q)) && (cat==="all"||c.category===cat) && (status==="all"||(status==="done"&&isDone(c.name))||(status==="todo"&&!isDone(c.name))));
+  if(!items.length) continue;
+  visible += items.length;
+  out += `<section><div class="category"><h2>${group}</h2><span>${items.filter(c=>isDone(c.name)).length} / ${items.length} in view</span></div><div class="grid">`;
+  for(const c of items){
+   const e=entry(c.name), done=!!e.done;
+   out += `<article class="drink ${done?'done':''}" tabindex="0" role="button" aria-label="Log ${esc(c.name)}" data-name="${esc(c.name)}"><div class="drink-top"><div class="check">${done?'✓':''}</div><h3>${esc(c.name)}</h3></div><div class="drink-bottom"><span class="tag">${done?'Tasted':'Not tried'}</span><span class="date">${done?(e.date?formatDate(e.date):(e.rating?'★'.repeat(e.rating):'Logged')):''}</span></div></article>`;
+  }
+  out += `</div></section>`;
+ }
+ $("list").innerHTML = visible ? out : `<div class="empty">No cocktails match that search. Try another name or filter.</div>`;
+ document.querySelectorAll(".drink").forEach(el=>{el.addEventListener("click",()=>openDetail(el.dataset.name));el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openDetail(el.dataset.name)}})});
+}
+function esc(s){return String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
+function formatDate(s){const d=new Date(s+"T12:00:00");return d.toLocaleDateString(undefined,{day:"numeric",month:"short",year:"2-digit"});}
+function openDetail(name){
+ current=name; const c=cocktails.find(x=>x.name===name), e=entry(name);
+ $("modalName").textContent=name; $("modalCat").textContent=c.category;
+ $("date").value=e.date||new Date().toISOString().slice(0,10); $("place").value=e.place||""; $("notes").value=e.notes||"";
+ rating=e.rating||0; updateStars(); $("undo").style.visibility=e.done?"visible":"hidden";
+ $("detail").showModal();
+}
+function updateStars(){document.querySelectorAll(".star").forEach(b=>b.classList.toggle("active",Number(b.dataset.v)<=rating));}
+document.querySelectorAll(".star").forEach(b=>b.addEventListener("click",()=>{rating=Number(b.dataset.v);updateStars()}));
+$("close").onclick=()=>$("detail").close();
+$("save").onclick=()=>{
+ if(!current)return;
+ progress[current]={done:true,date:$("date").value,place:$("place").value.trim(),rating,notes:$("notes").value.trim()};
+ saveStore();$("detail").close();render();
+};
+$("undo").onclick=()=>{if(current){delete progress[current];saveStore();$("detail").close();render();}};
+["search","category","status"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+$("export").onclick=()=>{
+ const blob=new Blob([JSON.stringify({version:1,exportedAt:new Date().toISOString(),progress},null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="iba-quest-progress.json";a.click();URL.revokeObjectURL(a.href);
+};
+$("importBtn").onclick=()=>$("importFile").click();
+$("importFile").onchange=async e=>{
+ const file=e.target.files[0];if(!file)return;
+ try{const parsed=JSON.parse(await file.text());const incoming=parsed.progress||parsed;if(!incoming||typeof incoming!=="object")throw Error("Invalid");progress={...progress,...incoming};saveStore();render();alert("Progress imported.");}
+ catch(err){alert("Couldn't read that file. Please choose an IBA Quest JSON export.");}
+ e.target.value="";
+};
+setupSupabase();
+$("connectBtn").onclick=()=>{const u=$("supabaseUrl").value.trim(),k=$("supabaseKey").value.trim();if(!u||!k){setCloudStatus("Missing credentials","Paste your Supabase Project URL and anon/publishable key.");return;}localStorage.setItem("iba_supabase_url",u);localStorage.setItem("iba_supabase_key",k);setupSupabase();};
+$("authBtn").onclick=async()=>{if(!supabase){setCloudStatus("Not connected","Set up Supabase first, using the setup section above.");return;}const email=$("email").value.trim(),password=$("password").value;if(!email||!password){setCloudStatus("Missing login details","Enter your email and password.");return;}const {data,error}=await supabase.auth.signInWithPassword({email,password});if(error){setCloudStatus("Sign in failed",error.message);return;}user=data.user;setLoggedInUI();await loadCloud();};
+$("signupBtn").onclick=async()=>{if(!supabase){setCloudStatus("Not connected","Set up Supabase first, using the setup section above.");return;}const email=$("email").value.trim(),password=$("password").value;if(!email||password.length<6){setCloudStatus("Check details","Enter an email and a password of at least 6 characters.");return;}const {data,error}=await supabase.auth.signUp({email,password});if(error){setCloudStatus("Account creation failed",error.message);return;}if(data.user && data.session){user=data.user;setLoggedInUI();await loadCloud();}else{setCloudStatus("Check your email","Supabase may require email confirmation. Confirm your email, then sign in here.");}};
+$("logoutBtn").onclick=async()=>{if(supabase)await supabase.auth.signOut();user=null;setLoggedInUI();setCloudStatus("Signed out","Your local copy remains on this browser. Sign in again to sync.");};
+if(supabase){supabase.auth.getSession().then(({data})=>{if(data.session){user=data.session.user;setLoggedInUI();loadCloud();}});}
+render();
+</script>
+</body>
+</html>
