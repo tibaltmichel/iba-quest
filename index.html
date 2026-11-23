@@ -98,7 +98,25 @@ try { progress = JSON.parse(store.get(KEY) || "{}") || {}; } catch(e) { progress
 const $ = id => document.getElementById(id);
 window.addEventListener("error",e=>{try{$("cloudTitle").textContent="⚠ Script error";$("cloudMsg").textContent=e.message;}catch(_){}});
 let sb = null, user = null, saveTimer = null, supabaseLoadPromise = null;
-async function ensureSupabaseLibrary(){ if(window.supabase && typeof window.supabase.createClient === "function") return window.supabase; if(supabaseLoadPromise) return supabaseLoadPromise; supabaseLoadPromise = new Promise((resolve,reject)=>{ const script=document.createElement("script"); script.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"; script.async=true; script.onload=()=>{ if(window.supabase && typeof window.supabase.createClient === "function") resolve(window.supabase); else reject(new Error("Supabase library loaded, but createClient was not found.")); }; script.onerror=()=>reject(new Error("Could not load Supabase library. Check your connection and retry.")); document.head.appendChild(script); }); try{return await supabaseLoadPromise;}catch(e){supabaseLoadPromise=null;throw e;} }
+async function ensureSupabaseLibrary(){
+ const pick=()=>{ for(const g of [window.supabase,window.supabaseJs,window.Supabase]){ if(g && typeof g.createClient==="function") return g; } return null; };
+ if(pick()) return pick();
+ if(supabaseLoadPromise) return supabaseLoadPromise;
+ const loadScript=url=>new Promise((res,rej)=>{ const sc=document.createElement("script"); sc.src=url; sc.async=true; sc.onload=res; sc.onerror=()=>rej(new Error("load failed: "+url)); document.head.appendChild(sc); });
+ supabaseLoadPromise=(async()=>{
+  const errors=[];
+  // 1) Build UMD (navigateur) sur plusieurs CDN
+  for(const url of ["https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js","https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js","https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.39.7/umd/supabase.min.js"]){
+   try{ await loadScript(url); const g=pick(); if(g) return g; errors.push("no createClient after "+url); }catch(e){ errors.push(e.message); }
+  }
+  // 2) Repli : module ES importé dynamiquement
+  for(const url of ["https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm","https://esm.sh/@supabase/supabase-js@2"]){
+   try{ const m=await import(url); const cc=m.createClient||(m.default&&m.default.createClient); if(typeof cc==="function") return {createClient:cc}; errors.push("no createClient in "+url); }catch(e){ errors.push(e.message); }
+  }
+  throw new Error("Could not load the Supabase library ("+errors.join(" ; ")+"). Check your connection, ad-blocker or network restrictions.");
+ })();
+ try{ return await supabaseLoadPromise; }catch(e){ supabaseLoadPromise=null; throw e; }
+}
 function setCloudStatus(title,msg){ $("cloudTitle").textContent=title; $("cloudMsg").textContent=msg; }
 function saveStore(){ store.set(KEY, JSON.stringify(progress)); if(user && sb){ clearTimeout(saveTimer); saveTimer=setTimeout(cloudSave,350); } }
 async function cloudSave(){ if(!user||!sb)return; try{ const {error}=await sb.from("cocktail_progress").upsert({user_id:user.id,progress,updated_at:new Date().toISOString()},{onConflict:"user_id"}); if(error) throw error; setCloudStatus("☁ Saved to your account", "Cloud sync active for "+user.email+". Your tasting progress is backed up online."); }catch(e){setCloudStatus("⚠ Cloud save failed",e.message+" — your changes remain saved locally in this browser.");} }
